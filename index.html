@@ -25,7 +25,7 @@
     .card {
       width: 100%;
       max-width: 390px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       border-radius: 28px;
       padding: 24px 18px;
       text-align: center;
@@ -102,6 +102,7 @@
       background: #fff5fb;
       border-radius: 20px;
       padding: 16px;
+      margin-top: 14px;
       margin-bottom: 18px;
       display: none;
       animation: fadeIn 0.6s ease;
@@ -137,24 +138,60 @@
       box-shadow: 0 8px 16px rgba(168, 85, 199, 0.28);
     }
 
+    .btn-secondary {
+      background: #fff1b8;
+      color: #8a5a00;
+      border: 2px solid #f4cf62;
+    }
+
     .btn-whatsapp {
       background: #25D366;
       color: white;
     }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+    .magic-section {
+      display: none;
+      background: #fff8fd;
+      border-radius: 20px;
+      padding: 14px;
       margin-top: 14px;
+      animation: fadeIn 0.6s ease;
     }
 
-    .gallery img {
+    .magic-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #8d3d75;
+    }
+
+    .magic-photo {
       width: 100%;
-      height: 90px;
+      height: 250px;
       object-fit: cover;
-      border-radius: 14px;
-      border: 3px solid #ffd6ea;
+      border-radius: 20px;
+      border: 4px solid #ffd6ea;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      background: #f7c6d9;
+    }
+
+    .photo-caption {
+      font-size: 15px;
+      margin-top: 10px;
+      color: #9b5c85;
+    }
+
+    .photo-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .photo-actions button {
+      font-size: 15px;
+      padding: 11px;
+      margin-top: 0;
     }
 
     .footer {
@@ -174,27 +211,34 @@
     <div class="crown">👑</div>
     <div class="subtitle">Te invito a mi cumple</div>
 
-    <h1>Nombre de tu hija</h1>
-    <div class="age">Cumplo 5 años</div>
+    <h1>Bianca</h1>
+    <div class="age">Cumplo 8 años</div>
 
     <!-- Cambiar foto-principal.jpg por la foto real -->
-    <img class="photo-main" src="foto-principal.jpg" alt="Foto principal" />
+    <img class="photo-main" src="bian.jpg" alt="Foto principal" />
 
     <p class="message">
       Vení a vivir una tarde mágica llena de juegos, alegría y mucha diversión.
     </p>
 
-    <button class="btn-primary" onclick="mostrarDetalles()">Ver invitación</button>
+    <button id="btnInvitacion" class="btn-primary" onclick="mostrarDetalles()">Abrir invitación mágica</button>
 
     <div class="details" id="details">
-      <p>📅 <strong>Fecha:</strong> Sábado 10 de mayo</p>
+      <p>📅 <strong>Fecha:</strong> Sábado 10 de agosto</p>
       <p>⏰ <strong>Hora:</strong> 17:00 hs</p>
       <p>📍 <strong>Lugar:</strong> Dirección del salón o casa</p>
 
-      <div class="gallery">
-        <img src="foto1.jpg" alt="Foto 1" />
-        <img src="foto2.jpg" alt="Foto 2" />
-        <img src="foto3.jpg" alt="Foto 3" />
+      <button class="btn-secondary" onclick="mostrarFotos()">Ver momentos mágicos ✨</button>
+
+      <div class="magic-section" id="magicSection">
+        <div class="magic-title">Momentos de princesa</div>
+        <img id="magicPhoto" class="magic-photo" src="bian2.jpeg" alt="Momento mágico" />
+        <div id="photoCaption" class="photo-caption">Mi sonrisa más linda 💖</div>
+
+        <div class="photo-actions">
+          <button class="btn-secondary" onclick="cambiarFoto(-1)">Anterior</button>
+          <button class="btn-secondary" onclick="cambiarFoto(1)">Siguiente</button>
+        </div>
       </div>
 
       <a class="btn btn-whatsapp" href="https://wa.me/1135996649?text=Hola%2C%20confirmo%20asistencia%20al%20cumple" target="_blank">
@@ -206,9 +250,45 @@
   </div>
 
   <script>
+    const fotos = [
+      {
+        src: 'bian3.jpeg',
+        texto: 'Mi sonrisa más linda 💖'
+      },
+      {
+        src: 'bian5.jpeg',
+        texto: 'Un momento lleno de magia ✨'
+      },
+      {
+        src: 'bian4.jpeg',
+        texto: 'Lista para festejar como princesa 👑'
+      }
+    ];
+
+    let fotoActual = 0;
+
     function mostrarDetalles() {
-      const details = document.getElementById('details');
-      details.style.display = 'block';
+      document.getElementById('details').style.display = 'block';
+      document.getElementById('btnInvitacion').style.display = 'none';
+    }
+
+    function mostrarFotos() {
+      document.getElementById('magicSection').style.display = 'block';
+    }
+
+    function cambiarFoto(direccion) {
+      fotoActual = fotoActual + direccion;
+
+      if (fotoActual < 0) {
+        fotoActual = fotos.length - 1;
+      }
+
+      if (fotoActual >= fotos.length) {
+        fotoActual = 0;
+      }
+
+      document.getElementById('magicPhoto').src = fotos[fotoActual].src;
+      document.getElementById('photoCaption').innerText = fotos[fotoActual].texto;
     }
   </script>
 
